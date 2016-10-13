@@ -58,7 +58,7 @@ foreach ($client->parseEvents() as $event) {
                 'messages' => array(
                     array(
                         'type' => 'text',
-                        'text' => 'Halo, terima kasih telah memfollow Bot tiket kereta api. Kamu dapat memanggilku dengan nama @tibot. Ketikkan @tibot untuk memulai proses pencarian tiket. Untuk memunculkan daftar perintah, dapat dengan mengirimkan "help". Kamu juga dapat menambahkan aku ke grup dengan teman-temanmu!'
+                        'text' => 'Halo, terima kasih telah memfollow Bot tiket kereta api. Kamu dapat memanggilku dengan nama @tibot. Ketikkan @tibot untuk memulai proses pencarian tiket. Untuk memunculkan daftar perintah, dapat dengan mengirimkan "@tibot help". Kamu juga dapat menambahkan aku ke grup dengan teman-temanmu!'
                     )
                 )
             ));
@@ -89,14 +89,16 @@ function processMessage($message, $source){
 
         $sourceType = $source['type'];
         
+        // if from user
         if($sourceType === "user"){
 
+            // if asking for help
             if( stripos($message['text'], "help") !== false ){
 
-                return "Untuk memesan tiket, mention @tibot dalam pesanmu setelah itu @tibot akan membalas. Balas @tibot dengan pesan \r\n " .
-                        " Pesan tiket dari <nama_kota> ke <nama_kota> pada tanggal <dd/mm> untuk <n> orang dengan kelas <eksekutif/bisnis/ekonomi> \r\n" .
-                        " \r\n Opsi <nama_kota> dan tanggal <dd/mm> adalah wajib. Jika jumlah orang tidak diisi, diasumsikan satu orang. Jika, kelas tidak diisi, akan ditampilkan seluruh kelas \r\n" .
-                        " Contoh: Pesan tiket dari bandung ke surabaya pada tanggal 20/12 untuk 2 orang dengan kelas bisnis";
+                return "Untuk memesan tiket, mention @tibot dalam pesanmu setelah itu @tibot akan membalas. Balas @tibot dengan pesan \r\n\r\n " .
+                        "Pesan tiket dari <nama_kota> ke <nama_kota> pada tanggal <dd/mm/yy> untuk <n> orang dengan kelas <eksekutif/bisnis/ekonomi> \r\n" .
+                        "\r\n Opsi <nama_kota> dan tanggal <dd/mm/yy> adalah wajib. Jika jumlah orang tidak diisi, diasumsikan satu orang. Jika, kelas tidak diisi, akan ditampilkan seluruh kelas \r\n" .
+                        "\r\nContoh: Pesan tiket dari bandung ke surabaya pada tanggal 20/12/2016 untuk 2 orang dengan kelas bisnis";
             }
 
             return "Halo, mau mencari tiket? Jika iya silahkan masukkan sintaks";
@@ -105,13 +107,7 @@ function processMessage($message, $source){
             return "heyho! " . $sourceType;
         }
 
-    } else if( stripos($message['text'], "help") !== false ){
-
-        return "Untuk memesan tiket, mention @tibot dalam pesanmu setelah itu @tibot akan membalas. Balas @tibot dengan pesan \r\n " .
-                " Pesan tiket dari <nama_kota> ke <nama_kota> pada tanggal <dd/mm> untuk <n> orang dengan kelas <eksekutif/bisnis/ekonomi> \r\n" .
-                " \r\n Opsi <nama_kota> dan tanggal <dd/mm> adalah wajib. Jika jumlah orang tidak diisi, diasumsikan satu orang. Jika, kelas tidak diisi, akan ditampilkan seluruh kelas \r\n" .
-                " Contoh: Pesan tiket dari bandung ke surabaya pada tanggal 20/12 untuk 2 orang dengan kelas bisnis";
     }
 
-    return $message['text'];
+    return "Silahkan panggil aku terlebih dahulu dengan @tibot atau ketik '@tibot help' untuk bantuan";
 }
