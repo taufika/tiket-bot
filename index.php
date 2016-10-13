@@ -28,19 +28,20 @@ foreach ($client->parseEvents() as $event) {
         case 'message':
         
             $message = $event['message'];
+            $source = $event['source'];
 
             switch ($message['type']) {
 
                 case 'text':
 
-                    $theMessage = $message['text'];
+                    $theMessage = $message;
 
                     $client->replyMessage(array(
                         'replyToken' => $event['replyToken'],
                         'messages' => array(
                             array(
                                 'type' => 'text',
-                                'text' => processMessage($theMessage)
+                                'text' => processMessage($theMessage, $source)
                             )
                         )
                     ));
@@ -81,7 +82,15 @@ foreach ($client->parseEvents() as $event) {
     }
 };
 
-function processMessage($message){
+function processMessage($message, $source){
 
-    return $message;
+    // check greeting
+    if( stripos($message['text'], "@tibot") !== false ){
+
+        $sourceType = $source['type'];
+
+        return "heyho! " . $sourceType;
+    }
+
+    return $message['text'];
 }
