@@ -29,12 +29,28 @@ foreach($dom->getElementsbyTagName('tr') as $node){
     $tr[] = $node;
 }
 
-$textVal = explode("\n", $tr[0]->textContent);
-print_r($textVal);
-
 // get all td
 foreach($tr as $node){
-    $child = $node->childNodes;
+    
+    $textVal = explode("\n", $node->textContent);
+    $nama = trim($textVal[1]);
+    $subClass = trim($textVal[2]);
+    $waktuBerangkat = trim($textVal[5]);
+    $stasiunBerangkat = trim($textVal[6]);
+    $durasi = trim($textVal[14]);
+    $waktuSampai = trim($textVal[9]);
+    $stasiunSampai = trim($textVal[10]);
+    $harga = trim($textVal[17]);
+    $kelas = trim($textVal[20]);
+
+    if( isset($textVal[26]) ){
+
+        $remark = trim($textVal[26]);
+        $url = $node->childNodes->item(12)->childNodes->item(1)->childNodes->item(1)->attributes->item(0)->value;
+
+        echo strtolower($kelas)."<br>";
+
+    }
 
 
 }
