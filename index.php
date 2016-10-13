@@ -113,7 +113,7 @@ function processMessage($message, $source){
     }
 
     // detect session
-    if($source['type'] === "user" && file_exists($source['userId']) ===  ){
+    if($source['type'] === "user" && file_exists($source['userId']) == 1  ){
 
         unlink($source['userId']);
         return "text";
