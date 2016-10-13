@@ -145,7 +145,7 @@ function processMessage($message, $source){
     }
 
     // check greeting
-    if( stripos($message['text'], "@tibot") !== false ){l
+    if( stripos($message['text'], "@tibot") !== false ){
 
         // if asking for help
         if( stripos($message['text'], "help") !== false ){
@@ -196,7 +196,7 @@ function processMessage($message, $source){
             return "";
         }
 
-    } else if($source['type'] === "room"){
+    } else if($source['type'] === "room" || $source['type'] === "group"){
         return "";
     } else {
         return "Silahkan panggil aku terlebih dahulu dengan @tibot atau ketik '@tibot help' untuk bantuan";
