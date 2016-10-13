@@ -34,17 +34,19 @@ foreach ($client->parseEvents() as $event) {
 
                 case 'text':
 
-                    $theMessage = $message;
+                    $theMessage = processMessage($message, $source);
+                    if( $theMessage !== ""){
 
-                    $client->replyMessage(array(
-                        'replyToken' => $event['replyToken'],
-                        'messages' => array(
-                            array(
-                                'type' => 'text',
-                                'text' => processMessage($theMessage, $source)
+                        $client->replyMessage(array(
+                            'replyToken' => $event['replyToken'],
+                            'messages' => array(
+                                array(
+                                    'type' => 'text',
+                                    'text' => processMessage($theMessage, $source)
+                                )
                             )
-                        )
-                    ));
+                        ));
+                    }
                     break;
 
                 default:
@@ -115,8 +117,21 @@ function processMessage($message, $source){
     // detect session
     if($source['type'] === "user" && file_exists($source['userId']) == 1  ){
 
-        unlink($source['userId']);
-        return "text";
+        $respArr = explode(" ", strtolower($message['text']));
+
+        // check if real order message
+        if( $respArr[0] == "pesan" && $respArr[1] == "tiket"){
+
+            $messageLower = strtolower($message['text']);
+
+            $kotaAsal = explode(" ", explode("dari ", $messageLower)[1])[0];
+        
+            unlink($source['userId']);
+            return "Pesan tiket dari " . $kotaAsal;
+
+        } else {
+            return "";
+        }
 
     } else {
         return "Silahkan panggil aku terlebih dahulu dengan @tibot atau ketik '@tibot help' untuk bantuan";
