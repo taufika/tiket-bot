@@ -91,13 +91,26 @@ function processMessage($message, $source){
         
         if($sourceType === "user"){
 
-            $response = $client->getProfile( $source['userId'] );
+            if( stripos($message['text'], "help") ){
 
-            return $response['displayName'];
+                return "Untuk memesan tiket, mention @tibot dalam pesanmu setelah itu @tibot akan membalas. Balas @tibot dengan pesan \r\n " .
+                        " Pesan tiket dari <nama_kota> ke <nama_kota> pada tanggal <dd/mm> untuk <n> orang dengan kelas <eksekutif/bisnis/ekonomi> \r\n" .
+                        " \r\n Opsi <nama_kota> dan tanggal <dd/mm> adalah wajib. Jika jumlah orang tidak diisi, diasumsikan satu orang. Jika, kelas tidak diisi, akan ditampilkan seluruh kelas \r\n" .
+                        " Contoh: Pesan tiket dari bandung ke surabaya pada tanggal 20/12 untuk 2 orang dengan kelas bisnis";
+            }
+
+            return "Halo, mau mencari tiket? Jika iya silahkan masukkan sintaks";
 
         } else {
             return "heyho! " . $sourceType;
         }
+        
+    } else if( stripos($message['text'], "help") ){
+
+        return "Untuk memesan tiket, mention @tibot dalam pesanmu setelah itu @tibot akan membalas. Balas @tibot dengan pesan \r\n " .
+                " Pesan tiket dari <nama_kota> ke <nama_kota> pada tanggal <dd/mm> untuk <n> orang dengan kelas <eksekutif/bisnis/ekonomi> \r\n" .
+                " \r\n Opsi <nama_kota> dan tanggal <dd/mm> adalah wajib. Jika jumlah orang tidak diisi, diasumsikan satu orang. Jika, kelas tidak diisi, akan ditampilkan seluruh kelas \r\n" .
+                " Contoh: Pesan tiket dari bandung ke surabaya pada tanggal 20/12 untuk 2 orang dengan kelas bisnis";
     }
 
     return $message['text'];
