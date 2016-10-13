@@ -16,16 +16,20 @@
  * under the License.
  */
 
-require_once('./LINEBotTiny.php');
-require_once('./firebaseLib.php');
+require_once('LINEBotTiny.php');
+require_once('firebaseLib.php');
 
 // firebase!!!!!!!!!!!!!!!!!!!!
 // firebase token etc
-$url = "https://cari-tiket-kereta.firebaseio.com/";
-$token = "AIzaSyDzwbCWu4-wxcVRezuFB8omsjsP1UQUAHA";
+$url = "https://cari-tiket-kereta.firebaseio.com";
+$token = "";
 
 // init firebase
 $firebase = new \Firebase\FirebaseLib($url,$token);
+
+
+// $kota = $firebase->get("stasiun");
+// print_r($kota);
 
 $channelAccessToken = 'wXNwka0cv5nHXaxH8gdAUzE0sLfOqVSV0RaORkWUgdDdXmHn1V2ESqcMwWBH4Mdv+96AqCaewXoBfPJB/sQADtgoi959EjaSoXvFqeMGtBnMLLXJyJVEjOCpNgYQbvNQw5OENcRm6wPuPK+LJB0YdgdB04t89/1O/w1cDnyilFU=';
 $channelSecret = 'ceddb49f9818734f7da2c6cebf522694';
@@ -145,7 +149,7 @@ function processMessage($message, $source){
             $text = "Berikut daftar kota yang dapat dilakukan pencarian: ";
 
             // get kota
-            $kota = $firebase->get("/stasiun");
+            $kota = $firebase->get("stasiun");
 
             $i = 1;
             foreach($kota as $key => $val){
