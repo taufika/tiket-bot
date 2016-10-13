@@ -233,12 +233,17 @@ function processMessage($message, $source){
 
                         $dom = new DOMDocument;
                         $dom->loadHTML($cutOutput);
+
+                        // get al row
                         foreach($dom->getElementsbyTagName('tr') as $node){
 
-                            $array[] = $dom->saveHTML($node);
+                            $tr[] = $node;
                         }
 
-                        error_log(implode("\r\n", $array));
+                        // get all td
+                        foreach($tr as $node){
+                            error_log($node);
+                        }
                     }
                 }
             } else {
