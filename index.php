@@ -19,6 +19,13 @@
 require_once('LINEBotTiny.php');
 require_once('firebaseLib.php');
 
+// $url = "https://cari-tiket-kereta.firebaseio.com";
+// $token = "";
+
+// $firebase = new \Firebase\FirebaseLib($url,$token);
+// $kota = $firebase->get("stasiun/eeee");
+// print_r($kota);
+
 
 $channelAccessToken = 'wXNwka0cv5nHXaxH8gdAUzE0sLfOqVSV0RaORkWUgdDdXmHn1V2ESqcMwWBH4Mdv+96AqCaewXoBfPJB/sQADtgoi959EjaSoXvFqeMGtBnMLLXJyJVEjOCpNgYQbvNQw5OENcRm6wPuPK+LJB0YdgdB04t89/1O/w1cDnyilFU=';
 $channelSecret = 'ceddb49f9818734f7da2c6cebf522694';
@@ -148,7 +155,7 @@ function processMessage($message, $source){
 
             $i = 1;
             foreach(json_decode($kota, true) as $key => $val){
-                $text .= "\r\n ".$i." ".$key;
+                $text .= "\r\n ".$i.". ".$key;
                 $i++;
             }
 
@@ -185,7 +192,23 @@ function processMessage($message, $source){
         
             unlink($fileName);
 
-            
+            // firebase!!!!!!!!!!!!!!!!!!!!
+            // firebase token etc
+            $url = "https://cari-tiket-kereta.firebaseio.com";
+            $token = "";
+
+            // init firebase
+            $firebase = new \Firebase\FirebaseLib($url,$token);
+            $kotaAsal = json_decode($firebase->get("stasiun/" . $kotaAsal), true);
+            $kotaTujuan = json_decode($firebase->get("stasiun/" . $kotaTujuan), true);
+
+            if ($kotaAsal != null && $kotaTujuan !== null){
+
+            } else {
+
+                return "Ups, salah satu kota yang dicantumkan tidak terdaftar! Untuk melihat daftar kota yang terdaftar kirimkan '@tibot list'";
+            }
+
 
             $ret = array(
                 'greeting' => "Menampilkan hasil pencarian tiket dari " . $kotaAsal . " ke " . $kotaTujuan . " pada tanggal " . $tanggal . " untuk " . $jumlah . " orang dengan kelas " . $kelas,
