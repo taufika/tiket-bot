@@ -26,17 +26,21 @@ foreach ($client->parseEvents() as $event) {
     switch ($event['type']) {
 
         case 'message':
+        
             $message = $event['message'];
 
             switch ($message['type']) {
 
                 case 'text':
+
+                    $theMessage = $message['text'];
+
                     $client->replyMessage(array(
                         'replyToken' => $event['replyToken'],
                         'messages' => array(
                             array(
                                 'type' => 'text',
-                                'text' => $message['text']
+                                'text' => processMessage($theMessage)
                             )
                         )
                     ));
@@ -76,3 +80,8 @@ foreach ($client->parseEvents() as $event) {
             break;
     }
 };
+
+function processMessage($message){
+
+    return $message;
+}
