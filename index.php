@@ -17,6 +17,15 @@
  */
 
 require_once('./LINEBotTiny.php');
+require_once('./firebaseLib.php');
+
+// firebase!!!!!!!!!!!!!!!!!!!!
+// firebase token etc
+$url = "https://cari-tiket-kereta.firebaseio.com/";
+$token = "AIzaSyDzwbCWu4-wxcVRezuFB8omsjsP1UQUAHA";
+
+// init firebase
+$firebase = new Firebase($url,$token);
 
 $channelAccessToken = 'wXNwka0cv5nHXaxH8gdAUzE0sLfOqVSV0RaORkWUgdDdXmHn1V2ESqcMwWBH4Mdv+96AqCaewXoBfPJB/sQADtgoi959EjaSoXvFqeMGtBnMLLXJyJVEjOCpNgYQbvNQw5OENcRm6wPuPK+LJB0YdgdB04t89/1O/w1cDnyilFU=';
 $channelSecret = 'ceddb49f9818734f7da2c6cebf522694';
@@ -128,8 +137,24 @@ function processMessage($message, $source){
             return "Untuk memesan tiket, mention @tibot dalam pesanmu setelah itu @tibot akan membalas. Balas @tibot dengan pesan \r\n\r\n " .
                     "Pesan tiket dari <nama_kota> ke <nama_kota> pada tanggal <dd/mm/yy> untuk <n> orang dengan kelas <eksekutif/bisnis/ekonomi> \r\n" .
                     "\r\n Opsi <nama_kota> dan tanggal <dd/mm/yy> adalah wajib. Jika jumlah orang tidak diisi, diasumsikan satu orang. Jika, kelas tidak diisi, akan ditampilkan seluruh kelas \r\n" .
-                    "\r\nContoh: Pesan tiket dari bandung ke surabaya pada tanggal 20/12/2016 untuk 2 orang dengan kelas bisnis";
-        } else {
+                    "\r\nContoh: Pesan tiket dari bandung ke surabaya pada tanggal 20/12/2016 untuk 2 orang dengan kelas bisnis\r\n\r\n" .
+                    "Untuk melihat daftar kota yang dapat dilakukan pencarian, kirimkan '@tibot list'";
+
+        } else if( stripos($message['text'], "list") !== false ){
+
+            $text = "Berikut daftar kota yang dapat dilakukan pencarian: ";
+
+            // get kota
+            $kota = $firebase->get("/stasiun");
+
+            $i = 1;
+            foreach($kota as $key => $val){
+                $text .= "\r\n ".$i." ".$key;
+                $i++;
+            }
+
+            return $text;
+        }{
 
             file_put_contents($fileName, "1");
             return "Halo, mau mencari tiket? Jika iya silahkan masukkan sintaks";
@@ -160,6 +185,9 @@ function processMessage($message, $source){
             }
         
             unlink($fileName);
+
+            
+
             $ret = array(
                 'greeting' => "Menampilkan hasil pencarian tiket dari " . $kotaAsal . " ke " . $kotaTujuan . " pada tanggal " . $tanggal . " untuk " . $jumlah . " orang dengan kelas " . $kelas,
                 'list' => array(
