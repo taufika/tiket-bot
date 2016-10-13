@@ -229,7 +229,7 @@ function processMessage($message, $source){
 
                         $cutOutput = explode("</tbody", explode('<tbody id="tbody_depart">', $output)[1] )[0];
 
-                        error_log($url);
+                        error_log($cutOutput);
 
                         $dom = new DOMDocument;
                         // $dom->loadHTML($cutOutput);
