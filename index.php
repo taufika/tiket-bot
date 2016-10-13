@@ -317,7 +317,7 @@ function processMessage($message, $source){
                     }
                 }
 
-                return "HEHEHE";
+                // return "HEHEHE";
                 return $ret;
 
             } else {
