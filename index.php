@@ -93,7 +93,8 @@ function processMessage($message, $source){
 
             $response = $client->getProfile( $source['userId'] );
 
-            return $response;
+            return $response['displayName'];
+
         } else {
             return "heyho! " . $sourceType;
         }
