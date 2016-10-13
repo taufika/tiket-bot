@@ -91,7 +91,7 @@ function processMessage($message, $source){
         
         if($sourceType === "user"){
 
-            if( stripos($message['text'], "help") ){
+            if( stripos($message['text'], "help") !== false ){
 
                 return "Untuk memesan tiket, mention @tibot dalam pesanmu setelah itu @tibot akan membalas. Balas @tibot dengan pesan \r\n " .
                         " Pesan tiket dari <nama_kota> ke <nama_kota> pada tanggal <dd/mm> untuk <n> orang dengan kelas <eksekutif/bisnis/ekonomi> \r\n" .
@@ -104,8 +104,8 @@ function processMessage($message, $source){
         } else {
             return "heyho! " . $sourceType;
         }
-        
-    } else if( stripos($message['text'], "help") ){
+
+    } else if( stripos($message['text'], "help") ! == false ){
 
         return "Untuk memesan tiket, mention @tibot dalam pesanmu setelah itu @tibot akan membalas. Balas @tibot dengan pesan \r\n " .
                 " Pesan tiket dari <nama_kota> ke <nama_kota> pada tanggal <dd/mm> untuk <n> orang dengan kelas <eksekutif/bisnis/ekonomi> \r\n" .
