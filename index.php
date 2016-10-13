@@ -229,7 +229,7 @@ function processMessage($message, $source){
 
                         $cutOutput = explode("</tbody", explode('<tbody id="tbody_depart">', $output)[1] )[0];
                         $dom = new DOMDocument;
-                        $dom-.loadHTML($cutOutput);
+                        $dom->loadHTML($cutOutput);
                         foreach($dom->getElementsbyTagName('tr') as $node){
 
                             $array[] = $dom->saveHTML($node);
