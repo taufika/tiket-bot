@@ -228,6 +228,9 @@ function processMessage($message, $source){
                         curl_close($ch);
 
                         $cutOutput = explode("</tbody", explode('<tbody id="tbody_depart">', $output)[1] )[0];
+
+                        error_log($cutOutput);
+
                         $dom = new DOMDocument;
                         $dom->loadHTML($cutOutput);
                         foreach($dom->getElementsbyTagName('tr') as $node){
