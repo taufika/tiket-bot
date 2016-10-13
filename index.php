@@ -122,9 +122,21 @@ function processMessage($message, $source){
             $messageLower = strtolower($message['text']);
 
             $kotaAsal = explode(" ", explode("dari ", $messageLower)[1])[0];
+            $kotaTujuan = explode(" ", explode(" ke ", $messageLower)[1])[0];
+            $tanggal = explode(" ", explode("pada tanggal ", $messageLower)[1])[0];
+
+            $jumlah = 1;
+            if( stripos($messageLower, " untuk ") !== false){
+                $jumlah = explode(" ", explode(" untuk ", $messageLower)[1])[0];
+            }
+
+            $kelas = "apapun";
+            if( stripos($messageLower, " dengan kelas ") !== false){
+                $kelas = explode(" dengan kelas ", $messageLower)[1];
+            }
         
             unlink($source['userId']);
-            return "Pesan tiket dari " . $kotaAsal;
+            return "Menampilkan hasil pencarian tiket dari " . $kotaAsal . " ke " . $kotaTujuan . " pada tanggal " . $tanggal . " untuk " . $jumlah . " orang dengan kelas " . $kelas;
 
         } else {
             return "";
