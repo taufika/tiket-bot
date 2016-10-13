@@ -308,7 +308,7 @@ function processMessage($message, $source){
                     'list' => $cards
                 );
 
-                return $ret;
+                return " test ";
 
             } else {
 
