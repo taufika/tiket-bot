@@ -282,14 +282,17 @@ function processMessage($message, $source){
                     }
                 }
 
-                $cards = [];
+                $ret = array(
+                    'greeting' => "Menampilkan hasil pencarian tiket dari " . $kotaAsal . " ke " . $kotaTujuan . " pada tanggal " . $tanggal . " untuk " . $jumlah . " orang dengan kelas " . $kelas,
+                    'list' => array()
+                );
 
                 // iterate kereta
                 foreach($kereta as $el){
 
                     if($kelas == "apapun" || strtolower($kelas) == strtolower($el['class']) ){
 
-                        array_push($cards, array(
+                        array_push($ret['list'], array(
                             'thumbnailImageUrl' => 'https://devdocs.line.me/images/carousel.png',
                             'title' => 'testing title',
                             'text' => 'testing description',
@@ -304,11 +307,6 @@ function processMessage($message, $source){
 
                     }
                 }
-
-                $ret = array(
-                    'greeting' => "Menampilkan hasil pencarian tiket dari " . $kotaAsal . " ke " . $kotaTujuan . " pada tanggal " . $tanggal . " untuk " . $jumlah . " orang dengan kelas " . $kelas,
-                    'list' => $cards
-                );
 
                 return " test ";
 
