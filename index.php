@@ -294,6 +294,27 @@ function processMessage($message, $source){
                 $ret = array(
                     'greeting' => "Menampilkan hasil pencarian tiket dari " . $kotaAsal . " ke " . $kotaTujuan . " pada tanggal " . $tanggal . " untuk " . $jumlah . " orang dengan kelas " . $kelas,
                     'list' => array(
+                        // array(
+                        //     'thumbnailImageUrl' => 'https://devdocs.line.me/images/carousel.png',
+                        //     'title' => 'testing title',
+                        //     'text' => 'testing description',
+                        //     'actions' => array(
+                        //         array(
+                        //             'type' => 'uri',
+                        //             'label' => 'Beli via Tiket.com',
+                        //             'uri' => 'http://www.google.com'
+                        //         )
+                        //     )
+                        // )
+                    )
+                );
+
+                // iterate kereta
+                for($i = 0; $i < 5; $i++){
+
+                    if($kelas == "apapun" || strtolower($kelas) == strtolower($el['class']) ){
+
+                        $isi = 
                         array(
                             'thumbnailImageUrl' => 'https://devdocs.line.me/images/carousel.png',
                             'title' => 'testing title',
@@ -305,30 +326,12 @@ function processMessage($message, $source){
                                     'uri' => 'http://www.google.com'
                                 )
                             )
-                        )
-                    )
-                );
+                        );
 
-                // iterate kereta
-                // foreach($kereta as $el){
+                        array_push($ret['list'], $isi);
 
-                //     if($kelas == "apapun" || strtolower($kelas) == strtolower($el['class']) ){
-
-                //         array_push($ret['list'], array(
-                //             'thumbnailImageUrl' => 'https://devdocs.line.me/images/carousel.png',
-                //             'title' => 'testing title',
-                //             'text' => 'testing description',
-                //             'actions' => array(
-                //                 array(
-                //                     'type' => 'uri',
-                //                     'label' => 'Beli via Tiket.com',
-                //                     'uri' => 'http://www.google.com'
-                //                 )
-                //             )
-                //         ));
-
-                //     }
-                // }
+                    }
+                }
 
                 // return "HEHEHE";
                 return $ret;
