@@ -240,7 +240,7 @@ function processMessage($message, $source){
                             $tr[] = $node;
                         }
 
-                        error_log(print_r($tr[0->childNodes, true));
+                        error_log(print_r($tr[0]->childNodes, true));
 
                         // get all td
                         foreach($tr as $node){
