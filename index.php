@@ -237,10 +237,12 @@ function processMessage($message, $source){
                         $internalErrors = libxml_use_internal_errors(true);
                         $dom->loadHTML($cutOutput);
 
+                        $tr = [];
+
                         // get al row
                         foreach($dom->getElementsbyTagName('tr') as $node){
 
-                            $tr[] = $node;
+                            array_push($tr, $node);
                         }
 
                         // get all td
