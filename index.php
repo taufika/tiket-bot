@@ -113,8 +113,9 @@ function processMessage($message, $source){
     }
 
     // detect session
-    if($source['type'] === "user" && file_exists($source['userId']) ){
+    if($source['type'] === "user" && file_exists($source['userId']) == 1 ){
 
+        delete($source['userId']);
         return "text";
 
     } else {
