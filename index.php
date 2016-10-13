@@ -104,19 +104,16 @@ function processMessage($message, $source){
             } else {
 
                 file_put_contents($source['userId'], "1");
+                return "Halo, mau mencari tiket? Jika iya silahkan masukkan sintaks";
             }
-
-            return "Halo, mau mencari tiket? Jika iya silahkan masukkan sintaks";
 
         } else {
             return "heyho! " . $sourceType;
         }
 
-    }
+    } else if($source['type'] === "user" && file_exists($source['userId']) == 1  ){
 
-    // detect session
-    if($source['type'] === "user" && file_exists($source['userId']) == 1  ){
-
+        // detect session
         $respArr = explode(" ", strtolower($message['text']));
 
         // check if real order message
