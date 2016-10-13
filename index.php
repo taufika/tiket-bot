@@ -242,7 +242,7 @@ function processMessage($message, $source){
 
                         // get all td
                         foreach($tr as $node){
-                            error_log($node);
+                            error_log(print_r($node, true));
                         }
                     }
                 }
