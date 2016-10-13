@@ -68,7 +68,7 @@ foreach ($client->parseEvents() as $event) {
 
                         // if return is object
                         $client->pushMessage(array(
-                            'replyToken' => $event['replyToken'],
+                            'to' => $to
                             'messages' => array(
                                 array(
                                     'type' => 'text',
@@ -305,6 +305,7 @@ function processMessage($message, $source){
                                     'uri' => 'http://www.google.com'
                                 )
                             )
+                        )
                     )
                 );
 
