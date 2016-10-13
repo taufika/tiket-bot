@@ -68,7 +68,7 @@ foreach ($client->parseEvents() as $event) {
 
                         // if return is object
                         $client->pushMessage(array(
-                            'to' => $to
+                            'to' => $to,
                             'messages' => array(
                                 array(
                                     'type' => 'text',
