@@ -55,8 +55,8 @@ foreach ($client->parseEvents() as $event) {
                     $theMessage = processMessage($message, $source);
                     if( is_string($theMessage) && $theMessage !== ""){
 
-                        $client->pushMessage(array(
-                            'to' => $to,
+                        $client->replyMessage(array(
+                            'replyToken' => $event['replyToken'],
                             'messages' => array(
                                 array(
                                     'type' => 'text',
@@ -68,7 +68,7 @@ foreach ($client->parseEvents() as $event) {
 
                         // if return is object
                         $client->pushMessage(array(
-                            'to' => $to,
+                            'replyToken' => $event['replyToken'],
                             'messages' => array(
                                 array(
                                     'type' => 'text',
@@ -317,6 +317,7 @@ function processMessage($message, $source){
                     }
                 }
 
+                return "HEHEHE";
                 return $ret;
 
             } else {
