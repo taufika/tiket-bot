@@ -142,12 +142,12 @@ function processMessage($message, $source){
             // firebase token etc
             $url = "https://cari-tiket-kereta.firebaseio.com";
             $token = "";
-            
+
             $firebase = new \Firebase\FirebaseLib($url,$token);
             $kota = $firebase->get("stasiun");
 
             $i = 1;
-            foreach($kota as $key => $val){
+            foreach(get_object_vars($kota) as $key => $val){
                 $text .= "\r\n ".$i." ".$key;
                 $i++;
             }
