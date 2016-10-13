@@ -160,7 +160,7 @@ function processMessage($message, $source){
             }
 
             return $text;
-        }{
+        } else {
 
             file_put_contents($fileName, "1");
             return "Halo, mau mencari tiket? Jika iya silahkan masukkan sintaks";
