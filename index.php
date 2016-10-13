@@ -204,6 +204,8 @@ function processMessage($message, $source){
 
             if ($kotaAsalArr != null && $kotaTujuanArr !== null){
 
+                $kereta = [];
+
                 foreach($kotaAsalArr as $k_a){
 
                     foreach($kotaTujuanArr as $k_t){
@@ -245,49 +247,75 @@ function processMessage($message, $source){
 
                         // get all td
                         foreach($tr as $node){
-                            $child = $node->childNodes;
-
                             
+                            $textVal = explode("\n", $node->textContent);
+                            $nama = trim($textVal[1]);
+                            $subClass = trim($textVal[2]);
+                            $waktuBerangkat = trim($textVal[5]);
+                            $stasiunBerangkat = trim($textVal[6]);
+                            $durasi = trim($textVal[14]);
+                            $waktuSampai = trim($textVal[9]);
+                            $stasiunSampai = trim($textVal[10]);
+                            $harga = trim($textVal[17]);
+                            $class = trim($textVal[20]);
+
+                            if( isset($textVal[26]) ){
+
+                                $remark = trim($textVal[26]);
+                                $url = $node->childNodes->item(12)->childNodes->item(1)->childNodes->item(1)->attributes->item(0)->value;
+
+                                // echo strtolower($class)."<br>";
+                                array_push($kereta, array(
+                                    'nama' => $nama,
+                                    'subClass' => $subClass,
+                                    'class' => $class,
+                                    'waktuBerangkat' => $waktuBerangkat,
+                                    'stasiunBerangkat' => $stasiunBerangkat,
+                                    'waktuSampai' => $waktuSampai,
+                                    'stasiunSampai' => $stasiunSampai,
+                                    'durasi' => $durasi,
+                                    'harga' => $harga,
+                                    'url' => $url
+                                ));
+                            }
                         }
                     }
                 }
+
+                $cards = [];
+
+                // iterate kereta
+                foreach($kereta as $el){
+
+                    if($kelas == "apapun" || strtolower($kelas) == strtolower($el['class']) ){
+
+                        array_push($cards, array(
+                            'thumbnailImageUrl' => 'https://devdocs.line.me/images/carousel.png',
+                            'title' => 'testing title',
+                            'text' => 'testing description',
+                            'actions' => array(
+                                array(
+                                    'type' => 'uri',
+                                    'label' => 'Beli via Tiket.com',
+                                    'uri' => 'http://www.google.com'
+                                )
+                            )
+                        ));
+
+                    }
+                }
+
+                $ret = array(
+                    'greeting' => "Menampilkan hasil pencarian tiket dari " . $kotaAsal . " ke " . $kotaTujuan . " pada tanggal " . $tanggal . " untuk " . $jumlah . " orang dengan kelas " . $kelas,
+                    'list' => $cards
+                );
+
+                return $ret;
+
             } else {
 
                 return "Ups, salah satu kota yang dicantumkan tidak terdaftar! Untuk melihat daftar kota yang terdaftar kirimkan '@tibot list'";
             }
-
-
-            $ret = array(
-                'greeting' => "Menampilkan hasil pencarian tiket dari " . $kotaAsal . " ke " . $kotaTujuan . " pada tanggal " . $tanggal . " untuk " . $jumlah . " orang dengan kelas " . $kelas,
-                'list' => array(
-                        array(
-                            'thumbnailImageUrl' => 'https://devdocs.line.me/images/carousel.png',
-                            'title' => 'testing title',
-                            'text' => 'testing description',
-                            'actions' => array(
-                                array(
-                                    'type' => 'uri',
-                                    'label' => 'Beli via Tiket.com',
-                                    'uri' => 'http://www.google.com'
-                                )
-                            )
-                        ),
-                        array(
-                            'thumbnailImageUrl' => 'https://devdocs.line.me/images/carousel.png',
-                            'title' => 'testing title',
-                            'text' => 'testing description',
-                            'actions' => array(
-                                array(
-                                    'type' => 'uri',
-                                    'label' => 'Beli via Tiket.com',
-                                    'uri' => 'http://www.google.com'
-                                )
-                            )
-                        )
-                    )
-                );
-
-            return $ret;
 
         } else {
             return "";
