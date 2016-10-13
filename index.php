@@ -25,7 +25,7 @@ $url = "https://cari-tiket-kereta.firebaseio.com/";
 $token = "AIzaSyDzwbCWu4-wxcVRezuFB8omsjsP1UQUAHA";
 
 // init firebase
-$firebase = new FirebaseLib($url,$token);
+$firebase = new \Firebase\FirebaseLib($url,$token);
 
 $channelAccessToken = 'wXNwka0cv5nHXaxH8gdAUzE0sLfOqVSV0RaORkWUgdDdXmHn1V2ESqcMwWBH4Mdv+96AqCaewXoBfPJB/sQADtgoi959EjaSoXvFqeMGtBnMLLXJyJVEjOCpNgYQbvNQw5OENcRm6wPuPK+LJB0YdgdB04t89/1O/w1cDnyilFU=';
 $channelSecret = 'ceddb49f9818734f7da2c6cebf522694';
