@@ -23,7 +23,7 @@ require_once('firebaseLib.php');
 // $token = "";
 
 // $firebase = new \Firebase\FirebaseLib($url,$token);
-// $kota = $firebase->get("stasiun/eeee");
+// $kota = $firebase->get("stasiun/bandung");
 // print_r($kota);
 
 
@@ -199,11 +199,45 @@ function processMessage($message, $source){
 
             // init firebase
             $firebase = new \Firebase\FirebaseLib($url,$token);
-            $kotaAsal = json_decode($firebase->get("stasiun/" . $kotaAsal), true);
-            $kotaTujuan = json_decode($firebase->get("stasiun/" . $kotaTujuan), true);
+            $kotaAsalArr = json_decode($firebase->get("stasiun/" . $kotaAsal), true);
+            $kotaTujuanArr = json_decode($firebase->get("stasiun/" . $kotaTujuan), true);
 
-            if ($kotaAsal != null && $kotaTujuan !== null){
+            if ($kotaAsalArr != null && $kotaTujuanArr !== null){
 
+                foreach($kotaAsalArr as $k_a){
+
+                    foreach($kotaTujuanArr as $k_t){
+
+                        $k_a = explode("#",$k_a)[1];
+                        $k_t = explode("#",$k_t)[1];
+                        $tanggal = date("Y-m-d", strtotime($tanggal));
+
+                        $url = "http://www.tiket.com/kereta-api/cari?d=" . $k_a . "&a=" . $k_t . "&date=" . $tanggal . "&ret_date=&adult=" . $jumlah . "&infant=0";
+
+                        //print($url);
+
+                        $ch = curl_init();
+
+                        curl_setopt($ch, CURLOPT_URL, $url);
+                        curl_setopt($ch, CURLOPT_HEADER, 0);
+
+                        // Should cURL return or print out the data? (true = return, false = print)
+                        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+                        $output = curl_exec($ch);
+                        curl_close($ch);
+
+                        $cutOutput = explode("</tbody", explode('<tbody id="tbody_depart">', $output)[1] )[0];
+                        $dom = new DOMDocument;
+                        $dom-.loadHTML($cutOutput);
+                        foreach($dom->getElementsbyTagName('tr') as $node){
+
+                            $array[] = $dom->saveHTML($node);
+                        }
+
+                        error_log(implode("\r\n", $array));
+                    }
+                }
             } else {
 
                 return "Ups, salah satu kota yang dicantumkan tidak terdaftar! Untuk melihat daftar kota yang terdaftar kirimkan '@tibot list'";
