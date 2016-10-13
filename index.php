@@ -231,7 +231,8 @@ function processMessage($message, $source){
 
                         // error_log($cutOutput);
 
-                        $dom = new DOMDocument;
+                        $dom = new DOMDocument('1.0', 'UTF-8');
+                        $internalErrors = libxml_use_internal_errors(true);
                         $dom->loadHTML($cutOutput);
 
                         // get al row

@@ -19,20 +19,22 @@ $cutOutput = explode("</tbody", explode('<tbody id="tbody_depart">', $output)[1]
 
 // error_log($cutOutput);
 
-$dom = new DOMDocument;
+$dom = new DOMDocument('1.0', 'UTF-8');
+$internalErrors = libxml_use_internal_errors(true);
 $dom->loadHTML($cutOutput);
 
 // get al row
 foreach($dom->getElementsbyTagName('tr') as $node){
 
-$tr[] = $node;
+    $tr[] = $node;
 }
 
-print_r($tr[0]);
+$textVal = explode("\n", $tr[0]->textContent);
+print_r($textVal);
 
 // get all td
 foreach($tr as $node){
-$child = $node->childNodes;
+    $child = $node->childNodes;
 
 
 }
