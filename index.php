@@ -63,32 +63,7 @@ foreach ($client->parseEvents() as $event) {
                                     'template' => array(
                                         
                                         'type' => 'carousel',
-                                        'columns' => array(
-                                            array(
-                                                'thumbnailImageUrl' => 'https://devdocs.line.me/images/carousel.png',
-                                                'title' => 'testing title',
-                                                'text' => 'testing description',
-                                                'actions' => array(
-                                                    array(
-                                                        'type' => 'uri',
-                                                        'label' => 'Beli via Tiket.com',
-                                                        'uri' => 'http://www.google.com'
-                                                    )
-                                                )
-                                            ),
-                                            array(
-                                                'thumbnailImageUrl' => 'https://devdocs.line.me/images/carousel.png',
-                                                'title' => 'testing title',
-                                                'text' => 'testing description',
-                                                'actions' => array(
-                                                    array(
-                                                        'type' => 'uri',
-                                                        'label' => 'Beli via Tiket.com',
-                                                        'uri' => 'http://www.google.com'
-                                                    )
-                                                )
-                                            )
-                                        )
+                                        'columns' => $theMessage['list']
                                     )
                                 )
                             )
@@ -187,7 +162,32 @@ function processMessage($message, $source){
             unlink($fileName);
             $ret = array(
                 'greeting' => "Menampilkan hasil pencarian tiket dari " . $kotaAsal . " ke " . $kotaTujuan . " pada tanggal " . $tanggal . " untuk " . $jumlah . " orang dengan kelas " . $kelas
-
+                'list' => array(
+                        array(
+                            'thumbnailImageUrl' => 'https://devdocs.line.me/images/carousel.png',
+                            'title' => 'testing title',
+                            'text' => 'testing description',
+                            'actions' => array(
+                                array(
+                                    'type' => 'uri',
+                                    'label' => 'Beli via Tiket.com',
+                                    'uri' => 'http://www.google.com'
+                                )
+                            )
+                        ),
+                        array(
+                            'thumbnailImageUrl' => 'https://devdocs.line.me/images/carousel.png',
+                            'title' => 'testing title',
+                            'text' => 'testing description',
+                            'actions' => array(
+                                array(
+                                    'type' => 'uri',
+                                    'label' => 'Beli via Tiket.com',
+                                    'uri' => 'http://www.google.com'
+                                )
+                            )
+                        )
+                    )
                 );
 
             return $ret;
