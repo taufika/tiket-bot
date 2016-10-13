@@ -229,16 +229,16 @@ function processMessage($message, $source){
 
                         $cutOutput = explode("</tbody", explode('<tbody id="tbody_depart">', $output)[1] )[0];
 
-                        error_log($cutOutput);
+                        error_log($Output);
 
                         $dom = new DOMDocument;
-                        $dom->loadHTML($cutOutput);
-                        foreach($dom->getElementsbyTagName('tr') as $node){
+                        // $dom->loadHTML($cutOutput);
+                        // foreach($dom->getElementsbyTagName('tr') as $node){
 
-                            $array[] = $dom->saveHTML($node);
-                        }
+                        //     $array[] = $dom->saveHTML($node);
+                        // }
 
-                        error_log(implode("\r\n", $array));
+                        // error_log(implode("\r\n", $array));
                     }
                 }
             } else {
