@@ -99,6 +99,9 @@ function processMessage($message, $source){
                         "Pesan tiket dari <nama_kota> ke <nama_kota> pada tanggal <dd/mm/yy> untuk <n> orang dengan kelas <eksekutif/bisnis/ekonomi> \r\n" .
                         "\r\n Opsi <nama_kota> dan tanggal <dd/mm/yy> adalah wajib. Jika jumlah orang tidak diisi, diasumsikan satu orang. Jika, kelas tidak diisi, akan ditampilkan seluruh kelas \r\n" .
                         "\r\nContoh: Pesan tiket dari bandung ke surabaya pada tanggal 20/12/2016 untuk 2 orang dengan kelas bisnis";
+            } else {
+
+                file_put_contents($source['userId'], "1");
             }
 
             return "Halo, mau mencari tiket? Jika iya silahkan masukkan sintaks";
@@ -109,5 +112,12 @@ function processMessage($message, $source){
 
     }
 
-    return "Silahkan panggil aku terlebih dahulu dengan @tibot atau ketik '@tibot help' untuk bantuan";
+    // detect session
+    if($source['type'] === "user" && file_exists($source['userId']) ){
+
+        return "text";
+
+    } else {
+        return "Silahkan panggil aku terlebih dahulu dengan @tibot atau ketik '@tibot help' untuk bantuan";
+    }
 }
