@@ -134,12 +134,12 @@ foreach ($client->parseEvents() as $event) {
 function processMessage($message, $source){
 
     // check greeting
-    if( stripos($message['text'], "@tibot") !== false ){
+    if( stripos($message['text'], "@tibot") !== false ){l
 
         $sourceType = $source['type'];
         
         // if from user
-        if($sourceType === "user"){
+        if($sourceType === "user" || $sourceType === "room"){
 
             // if asking for help
             if( stripos($message['text'], "help") !== false ){
@@ -194,6 +194,9 @@ function processMessage($message, $source){
             return "";
         }
 
+    } else if($source['type'] === "room"){
+        return "";
+        
     } else {
         return "Silahkan panggil aku terlebih dahulu dengan @tibot atau ketik '@tibot help' untuk bantuan";
     }
