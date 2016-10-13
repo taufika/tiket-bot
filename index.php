@@ -133,32 +133,34 @@ foreach ($client->parseEvents() as $event) {
 
 function processMessage($message, $source){
 
+    // detect chat type
+    $sourceType = $source['type'];
+
+    if($sourceType === "user"){
+        $fileName = $source['userId'];
+    } else if ($sourceType === "room"){
+        $fileName = $source['roomId'];
+    } else if ($sourceType === "group"){
+        $fileName = $source['groupId'];
+    }
+
     // check greeting
     if( stripos($message['text'], "@tibot") !== false ){l
 
-        $sourceType = $source['type'];
-        
-        // if from user
-        if($sourceType === "user" || $sourceType === "room"){
+        // if asking for help
+        if( stripos($message['text'], "help") !== false ){
 
-            // if asking for help
-            if( stripos($message['text'], "help") !== false ){
-
-                return "Untuk memesan tiket, mention @tibot dalam pesanmu setelah itu @tibot akan membalas. Balas @tibot dengan pesan \r\n\r\n " .
-                        "Pesan tiket dari <nama_kota> ke <nama_kota> pada tanggal <dd/mm/yy> untuk <n> orang dengan kelas <eksekutif/bisnis/ekonomi> \r\n" .
-                        "\r\n Opsi <nama_kota> dan tanggal <dd/mm/yy> adalah wajib. Jika jumlah orang tidak diisi, diasumsikan satu orang. Jika, kelas tidak diisi, akan ditampilkan seluruh kelas \r\n" .
-                        "\r\nContoh: Pesan tiket dari bandung ke surabaya pada tanggal 20/12/2016 untuk 2 orang dengan kelas bisnis";
-            } else {
-
-                file_put_contents($source['userId'], "1");
-                return "Halo, mau mencari tiket? Jika iya silahkan masukkan sintaks";
-            }
-
+            return "Untuk memesan tiket, mention @tibot dalam pesanmu setelah itu @tibot akan membalas. Balas @tibot dengan pesan \r\n\r\n " .
+                    "Pesan tiket dari <nama_kota> ke <nama_kota> pada tanggal <dd/mm/yy> untuk <n> orang dengan kelas <eksekutif/bisnis/ekonomi> \r\n" .
+                    "\r\n Opsi <nama_kota> dan tanggal <dd/mm/yy> adalah wajib. Jika jumlah orang tidak diisi, diasumsikan satu orang. Jika, kelas tidak diisi, akan ditampilkan seluruh kelas \r\n" .
+                    "\r\nContoh: Pesan tiket dari bandung ke surabaya pada tanggal 20/12/2016 untuk 2 orang dengan kelas bisnis";
         } else {
-            return "heyho! " . $sourceType;
+
+            file_put_contents($fileName, "1");
+            return "Halo, mau mencari tiket? Jika iya silahkan masukkan sintaks";
         }
 
-    } else if($source['type'] === "user" && file_exists($source['userId']) == 1  ){
+    } else if(file_exists($fileName) == 1  ){
 
         // detect session
         $respArr = explode(" ", strtolower($message['text']));
@@ -182,7 +184,7 @@ function processMessage($message, $source){
                 $kelas = explode(" dengan kelas ", $messageLower)[1];
             }
         
-            unlink($source['userId']);
+            unlink($fileName);
             $ret = array(
                 'greeting' => "Menampilkan hasil pencarian tiket dari " . $kotaAsal . " ke " . $kotaTujuan . " pada tanggal " . $tanggal . " untuk " . $jumlah . " orang dengan kelas " . $kelas
 
@@ -196,7 +198,6 @@ function processMessage($message, $source){
 
     } else if($source['type'] === "room"){
         return "";
-        
     } else {
         return "Silahkan panggil aku terlebih dahulu dengan @tibot atau ketik '@tibot help' untuk bantuan";
     }
