@@ -161,7 +161,7 @@ function processMessage($message, $source){
         
             unlink($fileName);
             $ret = array(
-                'greeting' => "Menampilkan hasil pencarian tiket dari " . $kotaAsal . " ke " . $kotaTujuan . " pada tanggal " . $tanggal . " untuk " . $jumlah . " orang dengan kelas " . $kelas
+                'greeting' => "Menampilkan hasil pencarian tiket dari " . $kotaAsal . " ke " . $kotaTujuan . " pada tanggal " . $tanggal . " untuk " . $jumlah . " orang dengan kelas " . $kelas,
                 'list' => array(
                         array(
                             'thumbnailImageUrl' => 'https://devdocs.line.me/images/carousel.png',
