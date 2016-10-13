@@ -25,8 +25,6 @@ $url = "https://cari-tiket-kereta.firebaseio.com";
 $token = "";
 
 // init firebase
-$firebase = new \Firebase\FirebaseLib($url,$token);
-
 
 // $kota = $firebase->get("stasiun");
 // print_r($kota);
@@ -149,6 +147,7 @@ function processMessage($message, $source){
             $text = "Berikut daftar kota yang dapat dilakukan pencarian: ";
 
             // get kota
+            $firebase = new \Firebase\FirebaseLib($url,$token);
             $kota = $firebase->get("stasiun");
 
             $i = 1;
