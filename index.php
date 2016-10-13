@@ -38,6 +38,15 @@ foreach ($client->parseEvents() as $event) {
         
             $message = $event['message'];
             $source = $event['source'];
+            $sourceType = $source['type'];
+
+            if($sourceType === "user"){
+                $to = $source['userId'];
+            } else if ($sourceType === "room"){
+                $to = $source['roomId'];
+            } else if ($sourceType === "group"){
+                $to = $source['groupId'];
+            }
 
             switch ($message['type']) {
 
@@ -46,8 +55,8 @@ foreach ($client->parseEvents() as $event) {
                     $theMessage = processMessage($message, $source);
                     if( is_string($theMessage) && $theMessage !== ""){
 
-                        $client->replyMessage(array(
-                            'replyToken' => $event['replyToken'],
+                        $client->pushMessage(array(
+                            'to' => $to,
                             'messages' => array(
                                 array(
                                     'type' => 'text',
@@ -58,8 +67,8 @@ foreach ($client->parseEvents() as $event) {
                     } else if ( !is_string($theMessage) ){
 
                         // if return is object
-                        $client->replyMessage(array(
-                            'replyToken' => $event['replyToken'],
+                        $client->pushMessage(array(
+                            'to' => $to,
                             'messages' => array(
                                 array(
                                     'type' => 'text',
@@ -81,7 +90,7 @@ foreach ($client->parseEvents() as $event) {
                     break;
 
                 default:
-                    error_log("Unsupporeted message type: " . $message['type']);
+                    error_log("Unsupported message type: " . $message['type']);
                     break;
             }
             break;
@@ -308,7 +317,7 @@ function processMessage($message, $source){
                     }
                 }
 
-                return " test ";
+                return $ret;
 
             } else {
 
