@@ -147,7 +147,7 @@ function processMessage($message, $source){
             $kota = $firebase->get("stasiun");
 
             $i = 1;
-            foreach(get_object_vars($kota) as $key => $val){
+            foreach(json_decode($kota, true) as $key => $val){
                 $text .= "\r\n ".$i." ".$key;
                 $i++;
             }
