@@ -208,8 +208,8 @@ function processMessage($message, $source){
 
                     foreach($kotaTujuanArr as $k_t){
 
-                        $k_a = explode("#",$k_a)[1];
-                        $k_t = explode("#",$k_t)[1];
+                        $k_a = explode("#",$k_a)[0];
+                        $k_t = explode("#",$k_t)[0];
                         $tanggal = date("Y-m-d", strtotime($tanggal));
 
                         $url = "http://www.tiket.com/kereta-api/cari?d=" . $k_a . "&a=" . $k_t . "&date=" . $tanggal . "&ret_date=&adult=" . $jumlah . "&infant=0";
