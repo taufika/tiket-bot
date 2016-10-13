@@ -101,7 +101,7 @@ function processMessage($message, $source){
                         "\r\nContoh: Pesan tiket dari bandung ke surabaya pada tanggal 20/12/2016 untuk 2 orang dengan kelas bisnis";
             } else {
 
-                file_put_contents($source['userId'], "1");
+                file_put_contents($source['userId']."dat", "1");
             }
 
             return "Halo, mau mencari tiket? Jika iya silahkan masukkan sintaks";
@@ -113,9 +113,9 @@ function processMessage($message, $source){
     }
 
     // detect session
-    if($source['type'] === "user" && file_exists($source['userId']) == 1 ){
+    if($source['type'] === "user" && file_exists($source['userId']."dat") ===  ){
 
-        delete($source['userId']);
+        unlink($source['userId']."dat");
         return "text";
 
     } else {
