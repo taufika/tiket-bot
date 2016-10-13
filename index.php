@@ -35,7 +35,7 @@ foreach ($client->parseEvents() as $event) {
                 case 'text':
 
                     $theMessage = processMessage($message, $source);
-                    if( $theMessage !== ""){
+                    if( is_string($theMessage) && $theMessage !== ""){
 
                         $client->replyMessage(array(
                             'replyToken' => $event['replyToken'],
@@ -43,6 +43,53 @@ foreach ($client->parseEvents() as $event) {
                                 array(
                                     'type' => 'text',
                                     'text' => $theMessage,
+                                )
+                            )
+                        ));
+                    } else if ( !is_string($theMessage) ){
+
+                        // if return is object
+                        $client->replyMessage(array(
+                            'replyToken' => $event['replyToken'],
+                            'messages' => array(
+                                array(
+                                    'type' => 'text',
+                                    'text' => $theMessage['greeting'],
+                                ),
+
+                                array(
+                                    'type' => 'template',
+                                    'altText' => 'List tiket',
+                                    'template' => array(
+                                        
+                                        'type' => 'carousel',
+                                        'columns' => array(
+                                            array(
+                                                'thumbnailImageUrl' => 'https://devdocs.line.me/images/carousel.png',
+                                                'title' => 'testing title',
+                                                'text' => 'testing description',
+                                                'actions' => array(
+                                                    array(
+                                                        'type' => 'uri',
+                                                        'label' => 'Beli via Tiket.com',
+                                                        'uri' => 'http://www.google.com'
+                                                    )
+                                                )
+                                            ),
+                                            array(
+                                                'thumbnailImageUrl' => 'https://devdocs.line.me/images/carousel.png',
+                                                'title' => 'testing title',
+                                                'text' => 'testing description',
+                                                'actions' => array(
+                                                    array(
+                                                        'type' => 'uri',
+                                                        'label' => 'Beli via Tiket.com',
+                                                        'uri' => 'http://www.google.com'
+                                                    )
+                                                )
+                                            )
+                                        )
+                                    )
                                 )
                             )
                         ));
@@ -136,7 +183,12 @@ function processMessage($message, $source){
             }
         
             unlink($source['userId']);
-            return "Menampilkan hasil pencarian tiket dari " . $kotaAsal . " ke " . $kotaTujuan . " pada tanggal " . $tanggal . " untuk " . $jumlah . " orang dengan kelas " . $kelas;
+            $ret = array(
+                'greeting' => "Menampilkan hasil pencarian tiket dari " . $kotaAsal . " ke " . $kotaTujuan . " pada tanggal " . $tanggal . " untuk " . $jumlah . " orang dengan kelas " . $kelas
+
+                );
+
+            return $ret;
 
         } else {
             return "";
