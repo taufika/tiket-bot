@@ -88,8 +88,15 @@ function processMessage($message, $source){
     if( stripos($message['text'], "@tibot") !== false ){
 
         $sourceType = $source['type'];
+        
+        if($sourceType === "user"){
 
-        return "heyho! " . $sourceType;
+            $response = $client->getProfile( $source['userId'] );
+
+            return $response;
+        } else {
+            return "heyho! " . $sourceType;
+        }
     }
 
     return $message['text'];

@@ -131,6 +131,8 @@ class LINEBotTiny
             http_response_code(500);
             error_log("Request failed: " . $response);
         }
+
+        return $response;
     }
 
     private function sign($body)
