@@ -1,14 +1,14 @@
 <?php
 
-$kelas = "ekonomi";
+$kelas = "apapun";
 $kotaAsal = "Bandung";
-$kotaTujuan = "Banjar";
-$tanggal = "10/11/2016";
+$kotaTujuan = "solo";
+$tanggal = "22/10/2016";
 $jumlah = 1;
 
 $kereta = [];
 
-$url = "http://www.tiket.com/kereta-api/cari?d=BD&a=BJR&date=2016-11-10&ret_date=&adult=1&infant=0";
+$url = "http://www.tiket.com/kereta-api/cari?d=BD&a=SLO&date=2016-11-10&ret_date=&adult=1&infant=0";
 
 //print($url);
 
@@ -92,8 +92,8 @@ if(sizeof($kereta) > 0){
 
             $isi = 
             array(
-                'title' => $kereta[$i]['nama'],
-                'text' => $kereta[$i]['stasiunBerangkat'] . " (" . $kereta[$i]['waktuBerangkat'] . ") ke " . $kereta[$i]['stasiunSampai'] . " (" . $kereta[$i]['waktuSampai'] . ") \r\n- " . $class,
+                'title' => $kereta[$i]['nama'] . " \r\n- " . $kereta[$i]['class'],
+                'text' => $kereta[$i]['stasiunBerangkat'] . " (" . $kereta[$i]['waktuBerangkat'] . ") ke " . $kereta[$i]['stasiunSampai'] . " (" . str_replace(" (+1 Hari)","",$kereta[$i]['waktuSampai']) . ")",
                 'actions' => array(
                     array(
                         'type' => 'uri',
@@ -124,8 +124,8 @@ $ret = array(
 
 if( sizeof($ret['list']) > 0){
 
-    // print_r($ret);
-    
+    print_r($ret);
+    // echo "hm hm\r\n";
 
     $client->pushMessage(array(
         'to' => "U1efe1930de5c8f094492c209dd3c672a",
@@ -148,6 +148,8 @@ if( sizeof($ret['list']) > 0){
     ));
 
 } else {
+
+    echo "hm\r\n";
 
     $client->pushMessage(array(
         'to' => "U1efe1930de5c8f094492c209dd3c672a",

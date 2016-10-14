@@ -327,8 +327,8 @@ function processMessage($message, $source){
 
                         if($kelas == "apapun" || strtolower($kelas) == strtolower($el['class']) ){
 
-                            $title = $kereta[$i]['nama'];
-                            $text = $kereta[$i]['stasiunBerangkat'] . " (" . $kereta[$i]['waktuBerangkat'] . ") ke " . $kereta[$i]['stasiunSampai'] . " (" . $kereta[$i]['waktuSampai'] . ") \r\n- " . $class;
+                            'title' => $kereta[$i]['nama'] . " \r\n- " . $kereta[$i]['class'],
+                            'text' => $kereta[$i]['stasiunBerangkat'] . " (" . $kereta[$i]['waktuBerangkat'] . ") ke " . $kereta[$i]['stasiunSampai'] . " (" . str_replace(" (+1 Hari)","",$kereta[$i]['waktuSampai']) . ")",
                             $beli = 'Beli (' . $kereta[$i]['harga'] . ')';
                             $uri = $kereta[$i]['url'];
 
