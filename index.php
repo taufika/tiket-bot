@@ -188,6 +188,7 @@ function processMessage($message, $source){
             $kotaAsal = explode(" ", explode("dari ", $messageLower)[1])[0];
             $kotaTujuan = explode(" ", explode(" ke ", $messageLower)[1])[0];
             $tanggal = explode(" ", explode("pada tanggal ", $messageLower)[1])[0];
+            $tanggal = str_replace("/","-", $tanggal);
 
             $jumlah = 1;
             if( stripos($messageLower, " untuk ") !== false){
@@ -321,6 +322,7 @@ function processMessage($message, $source){
                                 )
                             )
                         );
+                        error_log($kereta[$i]['stasiunBerangkat'] . " (" . $kereta[$i]['waktuBerangkat'] . ") ke " . $kereta[$i]['stasiunSampai'] . " (" . $kereta[$i]['waktuSampai'] . ") \r\n " . $class);
 
                         array_push($ret['list'], $isi);
 
