@@ -124,7 +124,7 @@ $client->pushMessage(array(
     'messages' => array(
         array(
             'type' => 'text',
-            'text' => $theMessage['greeting'],
+            'text' => $ret['greeting'],
         ),
 
         array(
@@ -133,7 +133,7 @@ $client->pushMessage(array(
             'template' => array(
                 
                 'type' => 'carousel',
-                'columns' => $theMessage['list']
+                'columns' => $ret['list']
             )
         )
     )
