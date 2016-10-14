@@ -55,25 +55,29 @@ foreach ($client->parseEvents() as $event) {
                     $theMessage = processMessage($message, $source);
                     if( is_string($theMessage) && $theMessage !== ""){
 
-                        // $client->replyMessage(array(
-                        //     'replyToken' => $event['replyToken'],
-                        //     'messages' => array(
-                        //         array(
-                        //             'type' => 'text',
-                        //             'text' => $to,
-                        //         )
-                        //     )
-                        // ));
+                        if( explode(" ", $theMessage)[0] == "Maaf,") {
 
-                        $client->replyMessage(array(
-                            'replyToken' => $event['replyToken'],
-                            'messages' => array(
-                                array(
-                                    'type' => 'text',
-                                    'text' => $theMessage,
+                            $client->pushMessage(array(
+                                'to' => $to,
+                                'messages' => array(
+                                    array(
+                                        'type' => 'text',
+                                        'text' => $theMessage,
+                                    )
                                 )
-                            )
-                        ));
+                            ));
+                        } else {
+
+                            $client->replyMessage(array(
+                                'replyToken' => $event['replyToken'],
+                                'messages' => array(
+                                    array(
+                                        'type' => 'text',
+                                        'text' => $theMessage,
+                                    )
+                                )
+                            ));
+                        }
                     } else if ( !is_string($theMessage) ){
 
                         // if return is object
@@ -346,7 +350,12 @@ function processMessage($message, $source){
                         }
                     }
 
-                    return $ret;
+                    // if filter return 0
+                    if( sizeof($ret['list']) > 0 ){
+                        return $ret;
+                    } else {
+                        return "Maaf, tidak ada kereta untuk perjalanan yang kamu inginkan. Coba cari pada tanggal atau rute yang berbeda.";
+                    }
                 } else {
                     return "Maaf, tidak ada kereta untuk perjalanan yang kamu inginkan. Coba cari pada tanggal atau rute yang berbeda.";
                 }

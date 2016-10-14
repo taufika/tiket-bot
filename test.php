@@ -1,6 +1,6 @@
 <?php
 
-$kelas = "apapun";
+$kelas = "ekonomi";
 $kotaAsal = "Bandung";
 $kotaTujuan = "Banjar";
 $tanggal = "10/11/2016";
@@ -88,7 +88,7 @@ if(sizeof($kereta) > 0){
 
     for($i = 0; $i < $max; $i++){
 
-        if($kelas == "apapun" || strtolower($kelas) == strtolower($el['class']) ){
+        if($kelas == "apapun" || strtolower($kelas) == strtolower($kereta[$i]['class']) ){
 
             $isi = 
             array(
@@ -110,12 +110,6 @@ if(sizeof($kereta) > 0){
     }
 }
 
-$ret = array(
-    'greeting' => "Menampilkan hasil pencarian tiket dari " . $kotaAsal . " ke " . $kotaTujuan . " pada tanggal " . $tanggal . " untuk " . $jumlah . " orang dengan kelas " . $kelas,
-    'list' => $cards
-);
-
-// print_r($ret);
 require_once('LINEBotTiny.php');
 
 $channelAccessToken = 'wXNwka0cv5nHXaxH8gdAUzE0sLfOqVSV0RaORkWUgdDdXmHn1V2ESqcMwWBH4Mdv+96AqCaewXoBfPJB/sQADtgoi959EjaSoXvFqeMGtBnMLLXJyJVEjOCpNgYQbvNQw5OENcRm6wPuPK+LJB0YdgdB04t89/1O/w1cDnyilFU=';
@@ -123,24 +117,47 @@ $channelSecret = 'ceddb49f9818734f7da2c6cebf522694';
 
 $client = new LINEBotTiny($channelAccessToken, $channelSecret);
 
-$client->pushMessage(array(
-    'to' => "U1efe1930de5c8f094492c209dd3c672a",
-    'messages' => array(
-        array(
-            'type' => 'text',
-            'text' => $ret['greeting'],
-        ),
+$ret = array(
+    'greeting' => "Menampilkan hasil pencarian tiket dari " . $kotaAsal . " ke " . $kotaTujuan . " pada tanggal " . $tanggal . " untuk " . $jumlah . " orang dengan kelas " . $kelas,
+    'list' => $cards
+);
 
-        array(
-            'type' => 'template',
-            'altText' => 'List tiket',
-            'template' => array(
-                
-                'type' => 'carousel',
-                'columns' => $ret['list']
+if( sizeof($ret['list']) > 0){
+
+    // print_r($ret);
+    
+
+    $client->pushMessage(array(
+        'to' => "U1efe1930de5c8f094492c209dd3c672a",
+        'messages' => array(
+            array(
+                'type' => 'text',
+                'text' => $ret['greeting'],
+            ),
+
+            array(
+                'type' => 'template',
+                'altText' => 'List tiket',
+                'template' => array(
+                    
+                    'type' => 'carousel',
+                    'columns' => $ret['list']
+                )
             )
         )
-    )
-));
+    ));
+
+} else {
+
+    $client->pushMessage(array(
+        'to' => "U1efe1930de5c8f094492c209dd3c672a",
+        'messages' => array(
+            array(
+                'type' => 'text',
+                'text' => "Maaf, tidak ada kereta untuk perjalanan yang kamu inginkan. Coba cari pada tanggal atau rute yang berbeda.",
+            )
+        )
+    ));
+}
 
 ?>
