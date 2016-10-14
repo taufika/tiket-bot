@@ -87,7 +87,7 @@ foreach ($client->parseEvents() as $event) {
 
                                 array(
                                     'type' => 'template',
-                                    'altText' => 'List tiket',
+                                    'altText' => 'List tiket. Untuk lebih lengkap kunjungi http://cari-tiket-kereta.firebaseapp.com',
                                     'template' => array(
                                         
                                         'type' => 'carousel',
@@ -317,26 +317,26 @@ function processMessage($message, $source){
                 // iterate kereta
                 if(sizeof($kereta) > 0){
 
-                    $max = max( array(5, sizeof($kereta)) );
+                    $max = min( array(5, sizeof($kereta)) );
 
                     for($i = 0; $i < $max; $i++){
 
                         if($kelas == "apapun" || strtolower($kelas) == strtolower($el['class']) ){
 
                             $title = $kereta[$i]['nama'];
-                            $text = $kereta[$i]['stasiunBerangkat'] . " (" . $kereta[$i]['waktuBerangkat'] . ") ke " . $kereta[$i]['stasiunSampai'] . " (" . $kereta[$i]['waktuSampai'] . ") - " . $class;
+                            $text = $kereta[$i]['stasiunBerangkat'] . " (" . $kereta[$i]['waktuBerangkat'] . ") ke " . $kereta[$i]['stasiunSampai'] . " (" . $kereta[$i]['waktuSampai'] . ") \r\n- " . $class;
                             $beli = 'Beli (' . $kereta[$i]['harga'] . ')';
                             $uri = $kereta[$i]['url'];
 
                             $isi = 
                             array(
-                                'title' => "PRETT ",
-                                'text' => "NIH MAMAM",
+                                'title' => $title,
+                                'text' => $text,
                                 'actions' => array(
                                     array(
                                         'type' => 'uri',
-                                        'label' => "HEMM",
-                                        'uri' => "http://google.com"
+                                        'label' => $beli,
+                                        'uri' => $uri
                                     )
                                 )
                             );

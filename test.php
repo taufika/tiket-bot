@@ -82,27 +82,31 @@ usort($kereta, function($item1, $item2){
 });
 
 // iterate kereta
-foreach($kereta as $i => $el){
+if(sizeof($kereta) > 0){
 
-    if($kelas == "apapun" || strtolower($kelas) == strtolower($el['class']) ){
+    $max = min( array(5, sizeof($kereta)) );
 
-        $isi = 
-        array(
-            'thumbnailImageUrl' => 'http://tiket-bot.herokuapp.com/img/ka' . ($i + 1) . '.jpg',
-            'title' => $kereta[$i]['nama'],
-            'text' => $kereta[$i]['stasiunBerangkat'] . " (" . $kereta[$i]['waktuBerangkat'] . ") ke " . $kereta[$i]['stasiunSampai'] . " (" . $kereta[$i]['waktuSampai'] . ") - " . $class,
-            'actions' => array(
-                array(
-                    'type' => 'uri',
-                    'label' => 'Beli (' . $kereta[$i]['harga'] . ')',
-                    'uri' => $kereta[$i]['url']
+    for($i = 0; $i < $max; $i++){
+
+        if($kelas == "apapun" || strtolower($kelas) == strtolower($el['class']) ){
+
+            $isi = 
+            array(
+                'title' => $kereta[$i]['nama'],
+                'text' => $kereta[$i]['stasiunBerangkat'] . " (" . $kereta[$i]['waktuBerangkat'] . ") ke " . $kereta[$i]['stasiunSampai'] . " (" . $kereta[$i]['waktuSampai'] . ") \r\n- " . $class,
+                'actions' => array(
+                    array(
+                        'type' => 'uri',
+                        'label' => 'Beli (' . $kereta[$i]['harga'] . ')',
+                        'uri' => $kereta[$i]['url']
+                    )
                 )
-            )
-        );
-        // error_log($kereta[$i]['nama'] . ' ' . $kereta[$i]['harga']);
+            );
+            // error_log($kereta[$i]['nama'] . ' ' . $kereta[$i]['harga']);
 
-        array_push($cards, $isi);
+            array_push($cards, $isi);
 
+        }
     }
 }
 
