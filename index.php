@@ -266,6 +266,7 @@ function processMessage($message, $source){
                             $waktuSampai = trim($textVal[9]);
                             $stasiunSampai = trim($textVal[10]);
                             $harga = trim($textVal[17]);
+                            $realHarga = (int) str_replace(".", "", explode("IDR ", $harga)[1]);
                             $class = trim($textVal[20]);
 
                             if( isset($textVal[26]) ){
@@ -284,6 +285,7 @@ function processMessage($message, $source){
                                     'stasiunSampai' => $stasiunSampai,
                                     'durasi' => $durasi,
                                     'harga' => $harga,
+                                    'realHarga' => $realHarga,
                                     'url' => $url
                                 ));
                             }
@@ -291,22 +293,14 @@ function processMessage($message, $source){
                     }
                 }
 
+                usort($kereta, function($item1, $item2){
+                    if($item1['realHarga'] == $item2['realHarga']) return 0;
+                    return $item1['realHarga'] < $item2['realHarga'] ? 1 : -1;
+                });
+
                 $ret = array(
-                    'greeting' => "Menampilkan hasil pencarian tiket dari " . $kotaAsal . " ke " . $kotaTujuan . " pada tanggal " . $tanggal . " untuk " . $jumlah . " orang dengan kelas " . $kelas,
-                    'list' => array(
-                        // array(
-                        //     'thumbnailImageUrl' => 'https://devdocs.line.me/images/carousel.png',
-                        //     'title' => 'testing title',
-                        //     'text' => 'testing description',
-                        //     'actions' => array(
-                        //         array(
-                        //             'type' => 'uri',
-                        //             'label' => 'Beli via Tiket.com',
-                        //             'uri' => 'http://www.google.com'
-                        //         )
-                        //     )
-                        // )
-                    )
+                    'greeting' => "Menampilkan 5 hasil pencarian tiket dari " . $kotaAsal . " ke " . $kotaTujuan . " pada tanggal " . $tanggal . " untuk " . $jumlah . " orang dengan kelas " . $kelas,
+                    'list' => array()
                 );
 
                 // iterate kereta
@@ -316,14 +310,14 @@ function processMessage($message, $source){
 
                         $isi = 
                         array(
-                            'thumbnailImageUrl' => 'https://devdocs.line.me/images/carousel.png',
-                            'title' => 'testing title',
-                            'text' => 'testing description',
+                            'thumbnailImageUrl' => 'http://tiket-bot.herokuapp.com/img/ka' . $i . '.jpg',
+                            'title' => $kereta[$i]['nama'] . ' ' . $kereta[$i]['harga'],
+                            'text' => $kereta[$i]['stasiunBerangkat'] . " (" . $kereta[$i]['waktuBerangkat'] . ") ke " . $kereta[$i]['stasiunSampai'] . " (" . $kereta[$i]['waktuSampai'] . ") \r\n " . $class,
                             'actions' => array(
                                 array(
                                     'type' => 'uri',
                                     'label' => 'Beli via Tiket.com',
-                                    'uri' => 'http://www.google.com'
+                                    'uri' => $kereta[$i]['url']
                                 )
                             )
                         );
