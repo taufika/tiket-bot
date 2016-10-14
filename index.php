@@ -310,7 +310,7 @@ function processMessage($message, $source){
 
                 usort($kereta, function($item1, $item2){
                     if($item1['realHarga'] == $item2['realHarga']) return 0;
-                    return $item1['realHarga'] < $item2['realHarga'] ? 1 : -1;
+                    return $item1['realHarga'] < $item2['realHarga'] ? -1 : 1;
                 });
 
                 $ret = array(
