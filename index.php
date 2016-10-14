@@ -324,7 +324,7 @@ function processMessage($message, $source){
                                 'actions' => array(
                                     array(
                                         'type' => 'uri',
-                                        'label' => "HEMM,
+                                        'label' => "HEMM",
                                         'uri' => $kereta[$i]['url']
                                     )
                                 )
