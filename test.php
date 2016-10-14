@@ -111,6 +111,32 @@ $ret = array(
     'list' => $cards
 );
 
-print_r($ret);
+// print_r($ret);
+require_once('LINEBotTiny.php');
+
+$channelAccessToken = 'wXNwka0cv5nHXaxH8gdAUzE0sLfOqVSV0RaORkWUgdDdXmHn1V2ESqcMwWBH4Mdv+96AqCaewXoBfPJB/sQADtgoi959EjaSoXvFqeMGtBnMLLXJyJVEjOCpNgYQbvNQw5OENcRm6wPuPK+LJB0YdgdB04t89/1O/w1cDnyilFU=';
+$channelSecret = 'ceddb49f9818734f7da2c6cebf522694';
+
+$client = new LINEBotTiny($channelAccessToken, $channelSecret);
+
+$client->pushMessage(array(
+    'to' => $to,
+    'messages' => array(
+        array(
+            'type' => 'text',
+            'text' => $theMessage['greeting'],
+        ),
+
+        array(
+            'type' => 'template',
+            'altText' => 'List tiket',
+            'template' => array(
+                
+                'type' => 'carousel',
+                'columns' => $theMessage['list']
+            )
+        )
+    )
+));
 
 ?>

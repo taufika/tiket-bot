@@ -66,6 +66,16 @@ foreach ($client->parseEvents() as $event) {
                         ));
                     } else if ( !is_string($theMessage) ){
 
+                        $client->replyMessage(array(
+                            'replyToken' => $event['replyToken'],
+                            'messages' => array(
+                                array(
+                                    'type' => 'text',
+                                    'text' => $to,
+                                )
+                            )
+                        ));
+
                         // if return is object
                         $client->pushMessage(array(
                             'to' => $to,
@@ -320,7 +330,7 @@ function processMessage($message, $source){
 
                             $isi = 
                             array(
-                                'title' => "PRETT " . $i,
+                                'title' => "PRETT ",
                                 'text' => "NIH MAMAM",
                                 'actions' => array(
                                     array(
