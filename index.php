@@ -323,7 +323,7 @@ function processMessage($message, $source){
 
                     $max = min( array(5, sizeof($kereta)) );
 
-                    for($i = 0; $i < $max; $i++){
+                    for($i = 0; $i < sizeof($kereta); $i++){
 
                         if($kelas == "apapun" || strtolower($kelas) == strtolower($kereta[$i]['class']) ){
 
@@ -349,6 +349,8 @@ function processMessage($message, $source){
 
                         }
                     }
+
+                    $ret['list'] = array_slice($ret['list'],0,5);
 
                     // if filter return 0
                     if( sizeof($ret['list']) > 0 ){

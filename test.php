@@ -84,9 +84,11 @@ usort($kereta, function($item1, $item2){
 // iterate kereta
 if(sizeof($kereta) > 0){
 
-    $max = min( array(999, sizeof($kereta)) );
+    $max = min( array(5, sizeof($kereta)) );
 
-    for($i = 0; $i < $max; $i++){
+    for($i = 0; $i < sizeof($kereta); $i++){
+
+        // echo "kelas = " . strtolower($kelas) . " ; class = " . strtolower($kereta[$i]['class'])."\r\n";
 
         if($kelas == "apapun" || strtolower($kelas) == strtolower($kereta[$i]['class']) ){
 
@@ -108,6 +110,8 @@ if(sizeof($kereta) > 0){
 
         }
     }
+
+    $cards = array_slice($cards,0,5);
 }
 
 require_once('LINEBotTiny.php');
