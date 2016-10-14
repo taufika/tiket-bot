@@ -91,7 +91,7 @@ foreach ($client->parseEvents() as $event) {
 
                                 array(
                                     'type' => 'template',
-                                    'altText' => 'List tiket. Untuk lebih lengkap kunjungi http://cari-tiket-kereta.firebaseapp.com',
+                                    'altText' => 'List tiket. Silahkan buka pesan melalui smartphone anda. Untuk lebih lengkap kunjungi http://cari-tiket-kereta.firebaseapp.com',
                                     'template' => array(
                                         
                                         'type' => 'carousel',
