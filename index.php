@@ -305,32 +305,38 @@ function processMessage($message, $source){
                 );
 
                 // iterate kereta
-                for($i = 0; $i < 5; $i++){
+                if(sizeof($kereta) > 0){
 
-                    if($kelas == "apapun" || strtolower($kelas) == strtolower($el['class']) ){
+                    $max = max(array(5, sizeof($kereta)));
 
-                        $isi = 
-                        array(
-                            'thumbnailImageUrl' => 'http://tiket-bot.herokuapp.com/img/ka' . ($i + 1) . '.jpg',
-                            'title' => $kereta[$i]['nama'],
-                            'text' => $kereta[$i]['stasiunBerangkat'] . " (" . $kereta[$i]['waktuBerangkat'] . ") ke " . $kereta[$i]['stasiunSampai'] . " (" . $kereta[$i]['waktuSampai'] . ") - " . $class,
-                            'actions' => array(
-                                array(
-                                    'type' => 'uri',
-                                    'label' => 'Beli (' . $kereta[$i]['harga'] . ')',
-                                    'uri' => $kereta[$i]['url']
+                    for($i = 0; $i < $max; $i++){
+
+                        if($kelas == "apapun" || strtolower($kelas) == strtolower($el['class']) ){
+
+                            $isi = 
+                            array(
+                                'thumbnailImageUrl' => 'https://devdocs.line.me/images/carousel.png',
+                                'title' => $kereta[$i]['nama'],
+                                'text' => $kereta[$i]['stasiunBerangkat'] . " (" . $kereta[$i]['waktuBerangkat'] . ") ke " . $kereta[$i]['stasiunSampai'] . " (" . $kereta[$i]['waktuSampai'] . ") - " . $class,
+                                'actions' => array(
+                                    array(
+                                        'type' => 'uri',
+                                        'label' => 'Beli (' . $kereta[$i]['harga'] . ')',
+                                        'uri' => $kereta[$i]['url']
+                                    )
                                 )
-                            )
-                        );
-                        // error_log($kereta[$i]['nama'] . ' ' . $kereta[$i]['harga']);
+                            );
+                            // error_log($kereta[$i]['nama'] . ' ' . $kereta[$i]['harga']);
 
-                        array_push($ret['list'], $isi);
+                            array_push($ret['list'], $isi);
 
+                        }
                     }
-                }
 
-                // return "HEHEHE";
-                return $ret;
+                    return $ret;
+                } else {
+                    return "Maaf, tidak ada kereta untuk perjalanan yang kamu inginkan. Coba cari pada tanggal atau rute yang berbeda.";
+                }
 
             } else {
 
