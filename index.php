@@ -307,17 +307,19 @@ function processMessage($message, $source){
                 // iterate kereta
                 if(sizeof($kereta) > 0){
 
-                    $max = max(array(5, sizeof($kereta)));
+                    $max = max( array(5, sizeof($kereta)) );
 
                     for($i = 0; $i < $max; $i++){
 
                         if($kelas == "apapun" || strtolower($kelas) == strtolower($el['class']) ){
 
+                            $title = $kereta[$i]['nama'];
+                            $text = $kereta[$i]['stasiunBerangkat'] . " (" . $kereta[$i]['waktuBerangkat'] . ") ke " . $kereta[$i]['stasiunSampai'] . " (" . $kereta[$i]['waktuSampai'] . ") - " . $class;
+
                             $isi = 
                             array(
-                                'thumbnailImageUrl' => 'https://devdocs.line.me/images/carousel.png',
-                                'title' => $kereta[$i]['nama'],
-                                'text' => $kereta[$i]['stasiunBerangkat'] . " (" . $kereta[$i]['waktuBerangkat'] . ") ke " . $kereta[$i]['stasiunSampai'] . " (" . $kereta[$i]['waktuSampai'] . ") - " . $class,
+                                'title' => "PRETT " . $i,
+                                'text' => "NIH MAMAM",
                                 'actions' => array(
                                     array(
                                         'type' => 'uri',
@@ -326,7 +328,6 @@ function processMessage($message, $source){
                                     )
                                 )
                             );
-                            // error_log($kereta[$i]['nama'] . ' ' . $kereta[$i]['harga']);
 
                             array_push($ret['list'], $isi);
 

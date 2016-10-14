@@ -49,6 +49,7 @@ foreach($tr as $node){
     $waktuSampai = trim($textVal[9]);
     $stasiunSampai = trim($textVal[10]);
     $harga = trim($textVal[17]);
+    $realHarga = (int) str_replace(".", "", explode("IDR ", $harga)[1]);
     $class = trim($textVal[20]);
 
     if( isset($textVal[26]) ){
@@ -67,12 +68,18 @@ foreach($tr as $node){
             'stasiunSampai' => $stasiunSampai,
             'durasi' => $durasi,
             'harga' => $harga,
+            'realHarga' => $realHarga,
             'url' => $url
         ));
     }
 }
 
 $cards = [];
+
+usort($kereta, function($item1, $item2){
+    if($item1['realHarga'] == $item2['realHarga']) return 0;
+    return $item1['realHarga'] < $item2['realHarga'] ? 1 : -1;
+});
 
 // iterate kereta
 foreach($kereta as $i => $el){
