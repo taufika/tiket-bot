@@ -325,7 +325,7 @@ function processMessage($message, $source){
 
                     for($i = 0; $i < $max; $i++){
 
-                        if($kelas == "apapun" || strtolower($kelas) == strtolower($el['class']) ){
+                        if($kelas == "apapun" || strtolower($kelas) == strtolower($kereta[$i]['class']) ){
 
                             $title = $kereta[$i]['nama'] . " \r\n- " . $kereta[$i]['class'];
                             $text = $kereta[$i]['stasiunBerangkat'] . " (" . $kereta[$i]['waktuBerangkat'] . ") ke " . $kereta[$i]['stasiunSampai'] . " (" . str_replace(" (+1 Hari)","",$kereta[$i]['waktuSampai']) . ")";

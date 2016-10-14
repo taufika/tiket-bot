@@ -1,6 +1,6 @@
 <?php
 
-$kelas = "apapun";
+$kelas = "bisnis";
 $kotaAsal = "Bandung";
 $kotaTujuan = "solo";
 $tanggal = "22/10/2016";
@@ -84,7 +84,7 @@ usort($kereta, function($item1, $item2){
 // iterate kereta
 if(sizeof($kereta) > 0){
 
-    $max = min( array(5, sizeof($kereta)) );
+    $max = min( array(999, sizeof($kereta)) );
 
     for($i = 0; $i < $max; $i++){
 
