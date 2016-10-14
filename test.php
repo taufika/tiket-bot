@@ -120,7 +120,7 @@ $channelSecret = 'ceddb49f9818734f7da2c6cebf522694';
 $client = new LINEBotTiny($channelAccessToken, $channelSecret);
 
 $client->pushMessage(array(
-    'to' => $to,
+    'to' => "U1efe1930de5c8f094492c209dd3c672a",
     'messages' => array(
         array(
             'type' => 'text',

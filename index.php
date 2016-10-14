@@ -55,15 +55,15 @@ foreach ($client->parseEvents() as $event) {
                     $theMessage = processMessage($message, $source);
                     if( is_string($theMessage) && $theMessage !== ""){
 
-                        $client->replyMessage(array(
-                            'replyToken' => $event['replyToken'],
-                            'messages' => array(
-                                array(
-                                    'type' => 'text',
-                                    'text' => $to,
-                                )
-                            )
-                        ));
+                        // $client->replyMessage(array(
+                        //     'replyToken' => $event['replyToken'],
+                        //     'messages' => array(
+                        //         array(
+                        //             'type' => 'text',
+                        //             'text' => $to,
+                        //         )
+                        //     )
+                        // ));
 
                         $client->replyMessage(array(
                             'replyToken' => $event['replyToken'],
