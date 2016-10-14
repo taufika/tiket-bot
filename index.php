@@ -60,6 +60,16 @@ foreach ($client->parseEvents() as $event) {
                             'messages' => array(
                                 array(
                                     'type' => 'text',
+                                    'text' => $to,
+                                )
+                            )
+                        ));
+
+                        $client->replyMessage(array(
+                            'replyToken' => $event['replyToken'],
+                            'messages' => array(
+                                array(
+                                    'type' => 'text',
                                     'text' => $theMessage,
                                 )
                             )
@@ -320,7 +330,7 @@ function processMessage($message, $source){
 
                             $isi = 
                             array(
-                                'title' => "PRETT " . $i,
+                                'title' => "PRETT ",
                                 'text' => "NIH MAMAM",
                                 'actions' => array(
                                     array(
