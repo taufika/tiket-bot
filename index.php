@@ -311,18 +311,18 @@ function processMessage($message, $source){
 
                         $isi = 
                         array(
-                            'thumbnailImageUrl' => 'http://tiket-bot.herokuapp.com/img/ka' . $i . '.jpg',
-                            'title' => $kereta[$i]['nama'] . ' ' . $kereta[$i]['harga'],
-                            'text' => $kereta[$i]['stasiunBerangkat'] . " (" . $kereta[$i]['waktuBerangkat'] . ") ke " . $kereta[$i]['stasiunSampai'] . " (" . $kereta[$i]['waktuSampai'] . ") \r\n " . $class,
+                            'thumbnailImageUrl' => 'http://tiket-bot.herokuapp.com/img/ka' . ($i + 1) . '.jpg',
+                            'title' => $kereta[$i]['nama'],
+                            'text' => $kereta[$i]['stasiunBerangkat'] . " (" . $kereta[$i]['waktuBerangkat'] . ") ke " . $kereta[$i]['stasiunSampai'] . " (" . $kereta[$i]['waktuSampai'] . ") - " . $class,
                             'actions' => array(
                                 array(
                                     'type' => 'uri',
-                                    'label' => 'Beli via Tiket.com',
+                                    'label' => 'Beli (' . $kereta[$i]['harga'] . ')',
                                     'uri' => $kereta[$i]['url']
                                 )
                             )
                         );
-                        error_log($kereta[$i]['stasiunBerangkat'] . " (" . $kereta[$i]['waktuBerangkat'] . ") ke " . $kereta[$i]['stasiunSampai'] . " (" . $kereta[$i]['waktuSampai'] . ") \r\n " . $class);
+                        // error_log($kereta[$i]['nama'] . ' ' . $kereta[$i]['harga']);
 
                         array_push($ret['list'], $isi);
 

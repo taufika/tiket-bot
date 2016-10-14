@@ -75,22 +75,26 @@ foreach($tr as $node){
 $cards = [];
 
 // iterate kereta
-foreach($kereta as $el){
+foreach($kereta as $i => $el){
 
     if($kelas == "apapun" || strtolower($kelas) == strtolower($el['class']) ){
 
-        array_push($cards, array(
-            'thumbnailImageUrl' => 'https://devdocs.line.me/images/carousel.png',
-            'title' => 'testing title',
-            'text' => 'testing description',
+        $isi = 
+        array(
+            'thumbnailImageUrl' => 'http://tiket-bot.herokuapp.com/img/ka' . ($i + 1) . '.jpg',
+            'title' => $kereta[$i]['nama'],
+            'text' => $kereta[$i]['stasiunBerangkat'] . " (" . $kereta[$i]['waktuBerangkat'] . ") ke " . $kereta[$i]['stasiunSampai'] . " (" . $kereta[$i]['waktuSampai'] . ") - " . $class,
             'actions' => array(
                 array(
                     'type' => 'uri',
-                    'label' => 'Beli via Tiket.com',
-                    'uri' => 'http://www.google.com'
+                    'label' => 'Beli (' . $kereta[$i]['harga'] . ')',
+                    'uri' => $kereta[$i]['url']
                 )
             )
-        ));
+        );
+        // error_log($kereta[$i]['nama'] . ' ' . $kereta[$i]['harga']);
+
+        array_push($cards, $isi);
 
     }
 }
