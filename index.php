@@ -316,6 +316,7 @@ function processMessage($message, $source){
                             $title = $kereta[$i]['nama'];
                             $text = $kereta[$i]['stasiunBerangkat'] . " (" . $kereta[$i]['waktuBerangkat'] . ") ke " . $kereta[$i]['stasiunSampai'] . " (" . $kereta[$i]['waktuSampai'] . ") - " . $class;
                             $beli = 'Beli (' . $kereta[$i]['harga'] . ')';
+                            $uri = $kereta[$i]['url'];
 
                             $isi = 
                             array(
@@ -325,7 +326,7 @@ function processMessage($message, $source){
                                     array(
                                         'type' => 'uri',
                                         'label' => "HEMM",
-                                        'uri' => $kereta[$i]['url']
+                                        'uri' => "http://google.com"
                                     )
                                 )
                             );
